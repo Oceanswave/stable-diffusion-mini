@@ -1,0 +1,27 @@
+version: "2.4"
+
+services:
+  ###############################################
+  # Retrieval Augmented Diffusion
+  retrieval-augmented-diffusion:
+    image: r8.im/afiaka87/retrieval-augmented-diffusion@sha256:aace17ed89538eb52e300bae380bdd7f2e75827cab303d38fe5852bbc5d0b1a8
+    container_name: retrieval-augmented-diffusion
+    restart: always
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+    ports:
+      - 5000:5000
+  ###############################################
+  # Web App
+  app:
+    image: oceanswave/retrieval-augmented-diffusion-app
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    container_name: retrieval-augmented-diffusion-app
+    restart: always
+    ports:
+      - 3000:3000
